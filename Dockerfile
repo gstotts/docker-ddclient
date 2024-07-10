@@ -15,9 +15,8 @@ RUN sed -i -e "s|dnsomatic_username|${USER}|g" /etc/ddclient/ddclient.conf && \
 # Ensure the OpenRC directories are set up
 RUN mkdir -p /run/openrc && touch /run/openrc/softlevel
 
-# Copy the wrapper script and make it executable
-COPY run-ddclient.sh /usr/local/bin/run-ddclient.sh
-RUN chmod +x /usr/local/bin/run-ddclient.sh
+RUN chown root:root /etc/ddclient/ddclient.conf && \
+    chmod 600 /etc/ddclient/ddclient.conf
 
 # Update supervisord.conf to use the wrapper script
 COPY supervisord.conf /etc/supervisor.d/supervisord.conf
